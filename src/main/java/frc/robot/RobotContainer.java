@@ -110,10 +110,10 @@ public class RobotContainer {
         joystick.povDown().onTrue(elevator.setControl(-0.03)).onFalse(elevator.setControl(0.0));
         
         joystick.pov(90).whileTrue(drivetrain.applyRequest(()->
-        forwardStraight.withVelocityX(0.0).withVelocityY(-0.5))); //Bot Oriented slow mode
+        forwardStraight.withVelocityY(0.0).withVelocityX(-0.5))); //Bot Oriented slow mode
         
         joystick.pov(270).whileTrue(drivetrain.applyRequest(()->
-        forwardStraight.withVelocityX(0.0).withVelocityY(0.5))); // Bot Oriented slow mode
+        forwardStraight.withVelocityY(0.0).withVelocityX(0.5))); // Bot Oriented slow mode
         
         drivetrain.registerTelemetry(logger::telemeterize);
 
