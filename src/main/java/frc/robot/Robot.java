@@ -159,49 +159,49 @@ public class Robot extends TimedRobot {
   }
 
   @Override
-  public void teleopPeriodic() {
-    
-    if (fightJoystick.getRawButtonPressed(YBUTTON)) {
-      isLiftRunning = !isLiftRunning; // Toggle motor on/off
-      if (isLiftRunning) {
-          isForward = true; // Set direction to forward
-      }
-    }
+  public void teleopPeriodic() {}
+    //TODO Moved into RobotContainer.java revert if issues.
+  //   if (fightJoystick.getRawButtonPressed(YBUTTON)) {
+  //     isLiftRunning = !isLiftRunning; // Toggle motor on/off
+  //     if (isLiftRunning) {
+  //         isForward = true; // Set direction to forward
+  //     }
+  //   }
   
-    if (fightJoystick.getRawButtonPressed(ABUTTON)) {
-      isLiftRunning = !isLiftRunning; // Toggle motor on/off
-      if (isLiftRunning) {
-          isForward = false; // Set direction to reverse
-      }
-    }
+  //   if (fightJoystick.getRawButtonPressed(ABUTTON)) {
+  //     isLiftRunning = !isLiftRunning; // Toggle motor on/off
+  //     if (isLiftRunning) {
+  //         isForward = false; // Set direction to reverse
+  //     }
+  //   }
   
-  // Set motor output based on toggle state
-    if (isLiftRunning) {
-      lift1.set(isForward ? 1.0 : -1.0);
-    } else {
-      lift1.set(0.0);
-    }
-    // Check for button press (transition from not pressed to pressed)
-    if (fightJoystick.getRawButton(X_BUTTON)){
-      algae = !algae;
-      climb1.set(algae1);
-    } else if (fightJoystick.getRawButton(R3BUTTON)){
-      climb1.set(algae2);
-    } else{
-      climb1.set(0.0);
-    }
+  // // Set motor output based on toggle state
+  //   if (isLiftRunning) {
+  //     lift1.set(isForward ? 1.0 : -1.0);
+  //   } else {
+  //     lift1.set(0.0);
+  //   }
+  //   // Check for button press (transition from not pressed to pressed)
+  //   if (fightJoystick.getRawButton(X_BUTTON)){
+  //     algae = !algae;
+  //     climb1.set(algae1);
+  //   } else if (fightJoystick.getRawButton(R3BUTTON)){
+  //     climb1.set(algae2);
+  //   } else{
+  //     climb1.set(0.0);
+  //   }
     
 
-    //Shoot coral out
-    if(fightJoystick.getRawButton(BBUTTON)){
-      iscoralrunning = !iscoralrunning;
-      coral1.set(coral1speed);
-    }else if(fightJoystick.getRawButton(R1BUTTON)){
-      coral1.set(coral2speed);
-    } else{
-      coral1.set(0.0);
-    }
-  }
+  //   //Shoot coral out
+  //   if(fightJoystick.getRawButton(BBUTTON)){
+  //     iscoralrunning = !iscoralrunning;
+  //     coral1.set(coral1speed);
+  //   }else if(fightJoystick.getRawButton(R1BUTTON)){
+  //     coral1.set(coral2speed);
+  //   } else{
+  //     coral1.set(0.0);
+  //   }
+  // }
 
   @Override
   public void teleopExit() {}

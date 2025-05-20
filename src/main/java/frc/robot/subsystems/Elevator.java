@@ -42,6 +42,9 @@ public class Elevator extends SubsystemBase {
         leader.set(VictorSPXControlMode.PercentOutput, -1 * (setpointPercent + kG + Math.copySign(kS, setpointPercent)));
     }
 
+    // public Comamnd 
+
+
     public Command setControl(double percent) {
         return Commands.runOnce(() -> {
             setpointPercent = percent;
