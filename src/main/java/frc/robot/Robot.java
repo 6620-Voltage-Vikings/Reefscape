@@ -73,10 +73,7 @@ public class Robot extends TimedRobot {
   private boolean isForward = true;
 
   private final RobotContainer m_robotContainer;
-  double slowSpeed = 0.7;
-  double reallySlowspeed = 0.5;
-  Boolean superSlowmode = false;
-  Boolean isslowspeed = false;
+
 
   PWMVictorSPX lift1 = new PWMVictorSPX(0);
   private static final int ABUTTON = 1;

@@ -65,8 +65,8 @@ public class RobotContainer {
    
     private boolean iscoralrunning = false;
    
-    PWMVictorSPX lift1 = new PWMVictorSPX(0);
-    SparkMax coral1 = new SparkMax(2, MotorType.kBrushless);
+    // PWMVictorSPX lift1 = new PWMVictorSPX(0);
+    // SparkMax coral1 = new SparkMax(2, MotorType.kBrushless);
     
     /** Elevator subsystem reference */
     private final Elevator elevator;
@@ -129,20 +129,19 @@ public class RobotContainer {
 
 
         //TODO Commands for Operator, revert if issues -J
-        if (fightJoystick.getRawButtonPressed(YBUTTON)){liftEleUp();}
-        if (fightJoystick.getRawButtonPressed(ABUTTON)){lowerEleDown();}
-        if (fightJoystick.getRawButtonPressed(BBUTTON)){coral1Shoot();}
-        if (fightJoystick.getRawButtonPressed(R1BUTTON)){coral2Shoot();}
+        // if (fightJoystick.getRawButtonPressed(YBUTTON)){liftEleUp();}
+        // if (fightJoystick.getRawButtonPressed(ABUTTON)){lowerEleDown();}
+        // if (fightJoystick.getRawButtonPressed(BBUTTON)){coral1Shoot();}
+        // if (fightJoystick.getRawButtonPressed(R1BUTTON)){coral2Shoot();}
 
-        if (isLiftRunning) {
-            lift1.set(isForward ? 1.0 : -1.0);
-          } else {
-            lift1.set(0.0);
-          }
-
-        joystick.povUp().onTrue(elevator.setControl(0.2)).onFalse(elevator.setControl(0.0));
+        // if (isLiftRunning) {
+        //     lift1.set(isForward ? 1.0 : -1.0);
+        //   } else {
+        //     lift1.set(0.0);
+        //   }
+        joystick.povUp().onTrue(elevator.setControl(0.02)).onFalse(elevator.setControl(0.0));
         joystick.povDown().onTrue(elevator.setControl(-0.03)).onFalse(elevator.setControl(0.0));
-        
+        // left and right movements(slowmode replacement)
         joystick.pov(90).whileTrue(drivetrain.applyRequest(()->
         forwardStraight.withVelocityY(0.0).withVelocityX(-0.5))); //Bot Oriented slow mode
         
@@ -151,53 +150,30 @@ public class RobotContainer {
         
         drivetrain.registerTelemetry(logger::telemeterize);
 
-        // toggle slow
-        joystick.leftBumper().onTrue(Commands.runOnce(() -> {
-            if (Slow == 0.25) {
-                Slow = 0.75;
-            } else {
-                Slow = 0.25;
-            }
-        }));
+    
+    ;
     }
 
-    //TODO Functions below I moved from Robot.java into here to avoid driving issues. Revert if not working - J
-    private void liftEleUp(){
-        if (fightJoystick.getRawButtonPressed(YBUTTON)) {
-            isLiftRunning = !isLiftRunning; // Toggle motor on/off
-            if (isLiftRunning) {
-                isForward = true; // Set direction to forward
-            }
-          }      
-    }
+    //TODO Functions below I moved from Robot.java into here to avoid driving issues. Revert if not working - 
     
-    private void lowerEleDown(){
-    if (fightJoystick.getRawButton(ABUTTON)) {
-        isLiftRunning = !isLiftRunning; // Toggle motor on/off
-        if (isLiftRunning) {
-            isForward = false; // Set direction to reverse
-         }
-        }
-      }
-    
-    private void coral1Shoot(){
-        if(fightJoystick.getRawButton(BBUTTON)){
-            iscoralrunning = !iscoralrunning;
-            coral1.set(coral1speed);
-          } else{
-            coral1.set(0.0);
-          }
+    // private void coral1Shoot(){
+    //     if(fightJoystick.getRawButton(BBUTTON)){
+    //         iscoralrunning = !iscoralrunning;
+    //         coral1.set(coral1speed);
+    //       } else{
+    //         coral1.set(0.0);
+    //       }
         
-    }
+    // }
 
-    private void coral2Shoot(){
-        if(fightJoystick.getRawButton(R1BUTTON)){
-            coral1.set(coral2speed);
-          } else{
-            coral1.set(0.0);
-          }
+    // private void coral2Shoot(){
+    //     if(fightJoystick.getRawButton(R1BUTTON)){
+    //         coral1.set(coral2speed);
+    //       } else{
+    //         coral1.set(0.0);
+    //       }
         
-    }
+    // }
 
     public Command getAutonomousCommand() {
         //return Commands.print("No autonomous command configured");
