@@ -23,6 +23,7 @@ import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.SparkLowLevel;
 import com.revrobotics.spark.SparkClosedLoopController;
 import frc.robot.generated.TunerConstants;
+import frc.robot.subsystems.Coral;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -47,6 +48,7 @@ import frc.robot.RobotContainer;
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
 
+  public Coral coral;
    Timer startTime = new Timer();
   //Turning wheel variables
   SparkMax climb1 = new SparkMax(4,MotorType.kBrushless);
@@ -78,6 +80,7 @@ public class Robot extends TimedRobot {
   Boolean superSlowmode = false;
   Boolean isslowspeed = false;
 
+  
   PWMVictorSPX lift1 = new PWMVictorSPX(0);
   private static final int ABUTTON = 1;
   VictorSPXConfiguration config2 = new VictorSPXConfiguration();
@@ -87,7 +90,7 @@ public class Robot extends TimedRobot {
   private boolean lastButtonState = false;
 
   //Code for coral
-  SparkMax coral1 = new SparkMax(2, MotorType.kBrushless);
+  static SparkMax coral1 = new SparkMax(2, MotorType.kBrushless);
   private double coral1speed = -0.5; //Coral shoot variable
   private double coral2speed = 0.3; //Coral unstuck variable
   private static final int R1BUTTON = 6;

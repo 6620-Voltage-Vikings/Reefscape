@@ -19,11 +19,18 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.Elevator;
+import frc.robot.subsystems.Coral;
+import frc.robot.Robot;
+import frc.robot.commands.CoralShoot;
+import frc.robot.commands.TestDriveCommand;
+
+
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.motorcontrol.PWMVictorSPX;
@@ -41,6 +48,7 @@ import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+
 
 public class RobotContainer {
     private double MaxSpeed = TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed
@@ -66,11 +74,14 @@ public class RobotContainer {
     private boolean iscoralrunning = false;
    
     PWMVictorSPX lift1 = new PWMVictorSPX(0);
-    SparkMax coral1 = new SparkMax(2, MotorType.kBrushless);
+    // SparkMax coral1 = new SparkMax(2, MotorType.kBrushless);
     
     /** Elevator subsystem reference */
     private final Elevator elevator;
-    
+    public Coral coral;
+    public Robot robot;
+
+
    // NamedCommands.registerCommand("name",Commands.runOnce());
 
     /* Setting up bindings for necessary control of the swerve drive platform */
@@ -91,7 +102,10 @@ public class RobotContainer {
 
     public RobotContainer() {
         elevator = Elevator.getInstance();
-
+        coral = new Coral();
+        robot = new Robot();
+        
+    
         NamedCommands.registerCommand("demo", Commands.none());
 
         autoChooser = AutoBuilder.buildAutoChooser();
@@ -111,6 +125,7 @@ public class RobotContainer {
             )
         );
 
+        
         joystick.a().whileTrue(drivetrain.applyRequest(() -> brake));
         joystick.b().whileTrue(drivetrain.applyRequest(() ->
             point.withModuleDirection(new Rotation2d(-joystick.getLeftY(), -joystick.getLeftX()))
@@ -128,11 +143,16 @@ public class RobotContainer {
 
 
 
-        //TODO Commands for Operator, revert if issues -J
+        
+        //elevator
         if (fightJoystick.getRawButtonPressed(YBUTTON)){liftEleUp();}
         if (fightJoystick.getRawButtonPressed(ABUTTON)){lowerEleDown();}
-        if (fightJoystick.getRawButtonPressed(BBUTTON)){coral1Shoot();}
-        if (fightJoystick.getRawButtonPressed(R1BUTTON)){coral2Shoot();}
+        
+        //TODO - coral is new and untested revert if issue and delete this line if works
+       new JoystickButton(fightJoystick, BBUTTON).whileTrue(new CoralShoot(coral, -0.5));
+       new JoystickButton(fightJoystick, R1BUTTON).whileTrue(new CoralShoot(coral, 0.3));
+        
+
 
         if (isLiftRunning) {
             lift1.set(isForward ? 1.0 : -1.0);
@@ -159,9 +179,9 @@ public class RobotContainer {
                 Slow = 0.25;
             }
         }));
+        //TODO Is this needed anymore or should we take out??
     }
 
-    //TODO Functions below I moved from Robot.java into here to avoid driving issues. Revert if not working - J
     private void liftEleUp(){
         if (fightJoystick.getRawButtonPressed(YBUTTON)) {
             isLiftRunning = !isLiftRunning; // Toggle motor on/off
@@ -180,27 +200,11 @@ public class RobotContainer {
         }
       }
     
-    private void coral1Shoot(){
-        if(fightJoystick.getRawButton(BBUTTON)){
-            iscoralrunning = !iscoralrunning;
-            coral1.set(coral1speed);
-          } else{
-            coral1.set(0.0);
-          }
-        
-    }
 
-    private void coral2Shoot(){
-        if(fightJoystick.getRawButton(R1BUTTON)){
-            coral1.set(coral2speed);
-          } else{
-            coral1.set(0.0);
-          }
-        
-    }
 
     public Command getAutonomousCommand() {
         //return Commands.print("No autonomous command configured");
         return autoChooser.getSelected();
     }
+    
 }
