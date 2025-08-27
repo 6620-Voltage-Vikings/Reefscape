@@ -156,9 +156,15 @@ public class Robot extends TimedRobot {
   }
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
   @Override
   public void teleopPeriodic() {}
     //TODO Moved into RobotContainer.java revert if issues.
+=======
+  // @Override
+  // public void teleopPeriodic() {
+    
+>>>>>>> Stashed changes
 =======
   // @Override
   // public void teleopPeriodic() {
