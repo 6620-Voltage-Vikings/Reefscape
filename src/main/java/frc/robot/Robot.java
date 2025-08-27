@@ -155,9 +155,15 @@ public class Robot extends TimedRobot {
     startTime.stop();
   }
 
+<<<<<<< Updated upstream
   @Override
   public void teleopPeriodic() {}
     //TODO Moved into RobotContainer.java revert if issues.
+=======
+  // @Override
+  // public void teleopPeriodic() {
+    
+>>>>>>> Stashed changes
   //   if (fightJoystick.getRawButtonPressed(YBUTTON)) {
   //     isLiftRunning = !isLiftRunning; // Toggle motor on/off
   //     if (isLiftRunning) {
